@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delhi Airport Hand & Checked Baggage Guide | JL0030 Student Assistant</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        jal: {
+                            red: '#E60012',
+                            dark: '#C00010',
+                            gold: '#D4AF37'
+                        },
+                        cisf: {
+                            navy: '#0F172A',
+                            accent: '#2563EB'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-jal-red text-white p-2 rounded-lg font-bold text-lg flex items-center justify-center h-10 w-10 shadow-md">
+                    <i class="fa-solid font-bold">JL</i>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                        <span>DEL &rarr; HND</span> 
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded bg-red-600 text-white">JL0030 Special</span>
+                    </h1>
+                    <p class="text-xs text-slate-400 hidden sm:block" id="app-subtitle">
+                        Delhi Airport (DEL) Baggage & Security Screening Assistant
+                    </p>
+                </div>
+            </div>
+
+            <!-- Language Switcher & Info Toggle -->
+            <div class="flex items-center space-x-3">
+                <button id="lang-btn" onclick="toggleLanguage()" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg text-sm font-medium transition-all">
+                    <i class="fa-solid fa-globe text-jal-gold"></i>
+                    <span id="lang-label">日本語に切り替え</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- Banner Card for Flight JL0030 -->
+        <div class="bg-gradient-to-r from-red-900 via-slate-900 to-slate-900 rounded-2xl p-6 text-white shadow-xl border border-red-800/40 relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10 text-white pointer-events-none">
+                <i class="fa-solid fa-plane-departure text-9xl"></i>
+            </div>
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                <div class="md:col-span-2 space-y-2">
+                    <div class="inline-flex items-center gap-2 bg-red-500/20 text-red-300 border border-red-500/30 text-xs px-2.5 py-1 rounded-full font-semibold">
+                        <i class="fa-solid fa-plane"></i>
+                        <span id="flight-tag">Japan Airlines JL0030 (Delhi T3 &rarr; Tokyo Haneda T3)</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight" id="banner-title">
+                        Student Flight Baggage Companion
+                    </h2>
+                    <p class="text-slate-300 text-sm leading-relaxed" id="banner-desc">
+                        Essential pre-flight baggage guidelines, CISF Delhi security rules, liquid exemptions, and JAL Economy Class allowance to ensure zero confiscations at Terminal 3.
+                    </p>
+                </div>
+                <div class="bg-slate-800/80 backdrop-blur-md p-4 rounded-xl border border-slate-700 text-center space-y-2">
+                    <span class="text-xs uppercase tracking-wider text-slate-400 font-semibold block" id="jal-econ-header">JAL Economy Class Allowance</span>
+                    <div class="flex justify-center items-center gap-4 text-center">
+                        <div>
+                            <span class="text-3xl font-extrabold text-white">2 <span class="text-xs font-normal text-slate-300">bags</span></span>
+                            <span class="block text-xs text-slate-400" id="bag-wt-1">Max 23kg / 50lbs each</span>
+                        </div>
+                        <div class="h-8 w-px bg-slate-700"></div>
+                        <div>
+                            <span class="text-3xl font-extrabold text-white">1 <span class="text-xs font-normal text-slate-300">cabin</span></span>
+                            <span class="block text-xs text-slate-400" id="bag-wt-2">Max 10kg + 1 Personal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-200 overflow-x-auto custom-scrollbar gap-2 pb-1 text-sm font-medium">
+            <button onclick="switchTab('jl30-tab')" id="btn-jl30-tab" class="tab-btn px-4 py-2.5 rounded-t-xl bg-white text-jal-red border-t-2 border-x border-jal-red font-semibold flex items-center gap-2 shadow-sm whitespace-nowrap">
+                <i class="fa-solid fa-suitcase"></i>
+                <span id="tab-label-jl30">JL0030 Baggage Rules</span>
+            </button>
+            <button onclick="switchTab('checker-tab')" id="btn-checker-tab" class="tab-btn px-4 py-2.5 rounded-t-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span id="tab-label-checker">Interactive Item Checker</span>
+            </button>
+            <button onclick="switchTab('meds-tab')" id="btn-meds-tab" class="tab-btn px-4 py-2.5 rounded-t-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-prescription-bottle-medical"></i>
+                <span id="tab-label-meds">Medicines & Exemptions</span>
+            </button>
+            <button onclick="switchTab('delhi-tab')" id="btn-delhi-tab" class="tab-btn px-4 py-2.5 rounded-t-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span id="tab-label-delhi">DEL T3 Screening Checklist</span>
+            </button>
+            <button onclick="switchTab('ref-tab')" id="btn-ref-tab" class="tab-btn px-4 py-2.5 rounded-t-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-book"></i>
+                <span id="tab-label-ref">Appendices & References</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: JL0030 Baggage Limits & Calculator -->
+        <section id="jl30-tab" class="tab-content space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- Left Column: Checked Baggage Policy -->
+                <div class="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6">
+                    <div class="flex items-center justify-between border-b pb-4">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2" id="jl30-sec1-title">
+                            <i class="fa-solid fa-boxes-packing text-jal-red"></i>
+                            JAL JL0030 Economy Class Checked Baggage Limits
+                        </h3>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-medium" id="status-included">Standard Free Allowance</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                            <div class="flex justify-between items-start">
+                                <span class="font-bold text-slate-800" id="num-bags-title">Quantity Allowance</span>
+                                <i class="fa-solid fa-suitcase-rolling text-2xl text-slate-400"></i>
+                            </div>
+                            <p class="text-3xl font-extrabold text-jal-red">2 <span class="text-lg font-semibold text-slate-700" id="pieces-unit">Pieces (Piece Concept)</span></p>
+                            <p class="text-xs text-slate-500" id="num-bags-desc">Applicable to standard Economy / Premium Economy tickets for Japan Airlines flights from India to Tokyo.</p>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                            <div class="flex justify-between items-start">
+                                <span class="font-bold text-slate-800" id="weight-limit-title">Weight Limit Per Bag</span>
+                                <i class="fa-solid fa-weight-hanging text-2xl text-slate-400"></i>
+                            </div>
+                            <p class="text-3xl font-extrabold text-slate-900">23 kg <span class="text-lg font-normal text-slate-500">(50 lbs)</span></p>
+                            <p class="text-xs text-slate-500" id="weight-limit-desc">Strictly enforced at DEL T3 check-in counters. Bags over 23kg will incur heavy overweight fees.</p>
+                        </div>
+                    </div>
+
+                    <!-- Size & Dimension rules -->
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl space-y-2">
+                        <h4 class="font-bold text-amber-900 flex items-center gap-2" id="dim-title">
+                            <i class="fa-solid fa-ruler-combined text-amber-600"></i>
+                            Maximum Dimensions Allowance
+                        </h4>
+                        <p class="text-sm text-amber-800 leading-relaxed" id="dim-desc">
+                            The total linear dimensions (<strong>Length + Width + Height</strong>) of each piece must not exceed <strong>203 cm (80 inches)</strong>, including handles, pockets, and wheels.
+                        </p>
+                    </div>
+
+                    <!-- Carry-on specific to JAL -->
+                    <div class="space-y-3 pt-2">
+                        <h4 class="font-bold text-slate-800 text-lg flex items-center gap-2" id="carry-title">
+                            <i class="fa-solid fa-briefcase text-slate-600"></i>
+                            JL0030 Carry-On (Hand Baggage) Specifics
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                                <span class="font-semibold block text-slate-900" id="carry-main-lbl">1 Main Carry-On Bag</span>
+                                <span class="text-slate-600 text-xs" id="carry-main-desc">Max 55cm × 40cm × 25cm (Total linear dimensions $\le$ 115cm)</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                                <span class="font-semibold block text-slate-900" id="carry-personal-lbl">1 Personal Item</span>
+                                <span class="text-slate-600 text-xs" id="carry-personal-desc">Laptop bag, handbag, or small backpack to fit under seat.</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500 italic" id="carry-comb-note">* Note: Combined total weight of both main carry-on and personal item must NOT exceed <strong>10 kg (22 lbs)</strong>.</p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Weight Calculator for JL0030 -->
+                <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-lg space-y-6 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="border-b border-slate-800 pb-3">
+                            <h3 class="text-lg font-bold flex items-center gap-2 text-jal-gold" id="calc-title">
+                                <i class="fa-solid fa-calculator"></i>
+                                JL0030 Luggage Weight Estimator
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-1" id="calc-subtitle">Check if your packed luggage meets JAL Economy Class limits.</p>
+                        </div>
+
+                        <!-- Inputs -->
+                        <div class="space-y-4 text-sm">
+                            <div>
+                                <label class="block font-medium mb-1 text-slate-300" id="calc-bag1-lbl">Checked Bag 1 Weight (kg):</label>
+                                <input type="number" id="calc-bag1" value="21" min="0" max="40" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white font-bold focus:outline-none focus:ring-2 focus:ring-jal-red" oninput="calculateBaggage()">
+                            </div>
+                            <div>
+                                <label class="block font-medium mb-1 text-slate-300" id="calc-bag2-lbl">Checked Bag 2 Weight (kg):</label>
+                                <input type="number" id="calc-bag2" value="22" min="0" max="40" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white font-bold focus:outline-none focus:ring-2 focus:ring-jal-red" oninput="calculateBaggage()">
+                            </div>
+                            <div>
+                                <label class="block font-medium mb-1 text-slate-300" id="calc-cabin-lbl">Cabin Bag + Personal Item Weight (kg):</label>
+                                <input type="number" id="calc-cabin" value="7" min="0" max="20" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white font-bold focus:outline-none focus:ring-2 focus:ring-jal-red" oninput="calculateBaggage()">
+                            </div>
+                        </div>
+
+                        <!-- Status Result -->
+                        <div id="calc-result" class="p-4 rounded-xl bg-slate-800 border border-slate-700 space-y-2">
+                            <!-- Populated dynamically by JS -->
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700/50 text-xs text-slate-400">
+                        <i class="fa-solid fa-circle-info text-slate-300 mr-1"></i>
+                        <span id="calc-fee-note">Overweight fee (23kg - 32kg): Approx JPY 10,000 / USD 70 per bag. Over 32kg is not accepted as baggage.</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 2: Interactive Item Search & Rule Checker -->
+        <section id="checker-tab" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900" id="checker-header">Interactive Baggage Item Search</h3>
+                    <p class="text-sm text-slate-600 mt-1" id="checker-sub">Search for any item to verify whether it goes into Cabin Baggage, Checked Baggage, or is Completely Banned at Delhi Airport.</p>
+                </div>
+
+                <!-- Search & Filters -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-2 relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input type="text" id="item-search" placeholder="Search items e.g., Power bank, Pickle, Medication, Scissors..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-jal-red focus:border-transparent text-sm" oninput="filterItems()">
+                    </div>
+                    <div>
+                        <select id="category-filter" onchange="filterItems()" class="w-full py-2.5 px-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-jal-red text-sm bg-white">
+                            <option value="all" id="cat-opt-all">All Categories</option>
+                            <option value="lags" id="cat-opt-lags">Liquids, Aerosols & Gels</option>
+                            <option value="electronics" id="cat-opt-elec">Electronics & Batteries</option>
+                            <option value="meds" id="cat-opt-meds">Medicines & Health</option>
+                            <option value="food" id="cat-opt-food">Spices, Food & Pickles</option>
+                            <option value="prohibited" id="cat-opt-pro">Prohibited & Sharp Items</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="flex flex-wrap gap-2 text-xs">
+                    <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-semibold flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> <span id="leg-allowed">Allowed in Cabin</span></span>
+                    <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 font-semibold flex items-center gap-1"><i class="fa-solid fa-triangle-exclamation"></i> <span id="leg-cond">Conditional / 100ml Rule</span></span>
+                    <span class="px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 font-semibold flex items-center gap-1"><i class="fa-solid fa-suitcase"></i> <span id="leg-checked">Checked Baggage Only</span></span>
+                    <span class="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 font-semibold flex items-center gap-1"><i class="fa-solid fa-ban"></i> <span id="leg-banned">Strictly Forbidden Everywhere</span></span>
+                </div>
+
+                <!-- Items Grid Container -->
+                <div id="items-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: Medicines & Special Exemptions -->
+        <section id="meds-tab" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6">
+                <div class="border-b pb-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2" id="meds-title">
+                        <i class="fa-solid fa-hand-holding-medical text-jal-red"></i>
+                        Comprehensive Medical Guidance & Screening Exemptions
+                    </h3>
+                    <p class="text-sm text-slate-600 mt-1" id="meds-sub">Rules for carrying prescription drugs, liquid medications $>100\text{ml}$, and medical devices through CISF security at Delhi T3.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- Standard Prescription Meds -->
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-pills text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900" id="med-solid-title">Pills & Tablets (Solid Form)</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed" id="med-solid-desc">
+                            Allowed in both cabin and checked baggage without strict quantity limits for personal use during travel.
+                        </p>
+                        <div class="bg-white p-2.5 rounded-lg border text-xs text-slate-700 space-y-1">
+                            <strong class="text-emerald-800 block" id="med-solid-tip-title">Best Practice:</strong>
+                            <span id="med-solid-tip">Keep in original foil/bottle with student name visible. Carry doctor's prescription in English.</span>
+                        </div>
+                    </div>
+
+                    <!-- Liquid Medicines > 100ml -->
+                    <div class="p-5 bg-amber-50 rounded-xl border border-amber-200 space-y-3">
+                        <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-bottle-droplet text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-amber-950" id="med-liquid-title">Liquid Medicines ($>100\text{ml}$)</h4>
+                        <p class="text-xs text-amber-900 leading-relaxed" id="med-liquid-desc">
+                            <strong>EXEMPT</strong> from the 100ml LAGs limit if needed during flight/transit.
+                        </p>
+                        <div class="bg-white p-2.5 rounded-lg border border-amber-200 text-xs text-slate-700 space-y-1">
+                            <strong class="text-amber-800 block" id="med-liquid-req-title">Mandatory Requirements:</strong>
+                            <ul class="list-disc pl-4 space-y-1" id="med-liquid-req-list">
+                                <li>Must present English doctor's note at CISF check.</li>
+                                <li>Name on prescription MUST match Passport.</li>
+                                <li>Declare verbally to screening officer before X-ray.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Syringes & Medical Devices -->
+                    <div class="p-5 bg-blue-50 rounded-xl border border-blue-200 space-y-3">
+                        <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-800 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-syringe text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-blue-950" id="med-syringes-title">Insulin, Syringes & Needles</h4>
+                        <p class="text-xs text-blue-900 leading-relaxed" id="med-syringes-desc">
+                            Hypodermic needles/syringes are allowed in cabin baggage <strong>ONLY</strong> when accompanied by injectable medication (e.g., Insulin).
+                        </p>
+                        <div class="bg-white p-2.5 rounded-lg border border-blue-200 text-xs text-slate-700 space-y-1">
+                            <strong class="text-blue-800 block" id="med-syringes-warn-title">Critical Storage Warning:</strong>
+                            <span id="med-syringes-warn">NEVER pack insulin in checked baggage! Temperatures in aircraft cargo can freeze and destroy insulin protein.</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Prescription Template / Requirements Info Box -->
+                <div class="bg-slate-900 text-white p-5 rounded-xl space-y-3">
+                    <h4 class="font-bold text-jal-gold flex items-center gap-2" id="presc-box-title">
+                        <i class="fa-solid fa-file-medical"></i>
+                        Checklist for Flying with Prescription Medication to Japan
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-300">
+                        <div class="space-y-2">
+                            <p class="font-semibold text-white" id="presc-delhi-check">For Delhi Airport (CISF Security Outbound):</p>
+                            <ul class="list-disc pl-4 space-y-1" id="presc-delhi-list">
+                                <li>Carry original Doctor's prescription on hospital letterhead.</li>
+                                <li>Ensure drug dosage and student name match your passport.</li>
+                                <li>Keep liquid medication accessible for separate X-ray inspection.</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="font-semibold text-white" id="presc-japan-check">For Japan Entry (Customs & MHLW Rules):</p>
+                            <ul class="list-disc pl-4 space-y-1" id="presc-japan-list">
+                                <li>Standard prescription drugs allowed up to a <strong>1-month supply</strong> without special certificate.</li>
+                                <li>Over-the-counter (OTC) medicines allowed up to a <strong>2-month supply</strong>.</li>
+                                <li>Psychotropics/Controlled substances require "Yunyu Kakushosho" (Import Certificate) in advance.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 4: DEL T3 Security Checkpoint Protocol -->
+        <section id="delhi-tab" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6">
+                <div class="border-b pb-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2" id="sec-title">
+                        <i class="fa-solid fa-shield-cat text-cisf-accent"></i>
+                        Delhi Airport (DEL T3) Security Screening Protocol (CISF Rules)
+                    </h3>
+                    <p class="text-sm text-slate-600 mt-1" id="sec-sub">Step-by-step security tray preparation to avoid secondary manual searches or confiscations at Terminal 3.</p>
+                </div>
+
+                <!-- Interactive Step-by-Step Checklist -->
+                <div class="space-y-4">
+                    <h4 class="font-bold text-slate-800 text-md" id="chk-head">Security Tray Preparation Steps (CISF Officer Expectations):</h4>
+                    
+                    <div class="space-y-3" id="checklist-container">
+                        <!-- Checklist Item 1 -->
+                        <label class="flex items-start gap-3 p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl border border-slate-200 cursor-pointer transition-all">
+                            <input type="checkbox" class="mt-1 rounded border-slate-300 text-jal-red focus:ring-jal-red h-4 w-4">
+                            <div class="text-sm">
+                                <span class="font-bold text-slate-900 block" id="chk1-t">Tray 1: All Electronics & Large Devices</span>
+                                <span class="text-slate-600 text-xs" id="chk1-d">Remove Laptop, Tablet, Power Banks, Chargers, and Cameras from your bag. Place them flat in Tray 1 with nothing covering them.</span>
+                            </div>
+                        </label>
+
+                        <!-- Checklist Item 2 -->
+                        <label class="flex items-start gap-3 p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl border border-slate-200 cursor-pointer transition-all">
+                            <input type="checkbox" class="mt-1 rounded border-slate-300 text-jal-red focus:ring-jal-red h-4 w-4">
+                            <div class="text-sm">
+                                <span class="font-bold text-slate-900 block" id="chk2-t">Tray 2: Liquids Bag & Personal Metal Items</span>
+                                <span class="text-slate-600 text-xs" id="chk2-d">Place your 1-Litre clear resealable bag of liquids ($\le$ 100ml each), jacket/coat, belt with metal buckle, watch, and coins/keys in Tray 2.</span>
+                            </div>
+                        </label>
+
+                        <!-- Checklist Item 3 -->
+                        <label class="flex items-start gap-3 p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl border border-slate-200 cursor-pointer transition-all">
+                            <input type="checkbox" class="mt-1 rounded border-slate-300 text-jal-red focus:ring-jal-red h-4 w-4">
+                            <div class="text-sm">
+                                <span class="font-bold text-slate-900 block" id="chk3-t">Boarding Pass & Stamping (CISF Verification)</span>
+                                <span class="text-slate-600 text-xs" id="chk3-d">Keep your physical boarding pass or e-boarding pass on phone ready alongside your Japanese Passport.</span>
+                            </div>
+                        </label>
+
+                        <!-- Checklist Item 4 -->
+                        <label class="flex items-start gap-3 p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl border border-slate-200 cursor-pointer transition-all">
+                            <input type="checkbox" class="mt-1 rounded border-slate-300 text-jal-red focus:ring-jal-red h-4 w-4">
+                            <div class="text-sm">
+                                <span class="font-bold text-slate-900 block" id="chk4-t">Spices & Powders Alert ($>350\text{g}$)</span>
+                                <span class="text-slate-600 text-xs" id="chk4-d">If carrying Indian spices, tea powders, or curry powders in carry-on, declare them or place them in checked luggage to prevent secondary screening delays.</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- CISF Specific Alert Callout -->
+                <div class="bg-rose-50 border-l-4 border-rose-600 p-4 rounded-r-xl space-y-2">
+                    <h4 class="font-bold text-rose-900 flex items-center gap-2" id="cisf-warn-t">
+                        <i class="fa-solid fa-triangle-exclamation text-rose-600"></i>
+                        CISF Zero-Tolerance Confiscation Notice
+                    </h4>
+                    <p class="text-xs text-rose-800 leading-relaxed" id="cisf-warn-d">
+                        Lighters, matchboxes, e-cigarettes/vapes, sharp manicure tools, and liquid containers exceeding 100ml (including traditional Indian pickles in oil) are <strong>immediately confiscated</strong> without exception at DEL T3 security screening. Confiscated items cannot be retrieved or mailed back.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: Appendices & Official References -->
+        <section id="ref-tab" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900" id="ref-header">Appendices & Official Legal References</h3>
+                    <p class="text-sm text-slate-600 mt-1" id="ref-sub">Regulatory sources governing Indian aviation security, Japan Airlines policy, and Japanese Ministry regulations.</p>
+                </div>
+
+                <div class="space-y-4 text-sm">
+
+                    <!-- Ref 1 -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                        <div class="flex justify-between items-start">
+                            <span class="font-bold text-slate-900" id="ref1-title">1. Bureau of Civil Aviation Security (BCAS), Ministry of Civil Aviation, India</span>
+                            <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-mono">BCAS Circular 6/2000</span>
+                        </div>
+                        <p class="text-xs text-slate-600" id="ref1-desc">Establishes the Single Hand Baggage Directive, Security Screening protocols, and LAGs 100ml container limits for all Indian international departures.</p>
+                        <a href="https://bcasindia.gov.in" target="_blank" rel="noopener" class="text-xs text-jal-red hover:underline inline-flex items-center gap-1 font-semibold mt-1">
+                            <span>Official BCAS Portal</span> <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+
+                    <!-- Ref 2 -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                        <div class="flex justify-between items-start">
+                            <span class="font-bold text-slate-900" id="ref2-title">2. Japan Airlines (JAL) - Baggage Guidelines for International Flights</span>
+                            <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-mono">JL0030 Policy</span>
+                        </div>
+                        <p class="text-xs text-slate-600" id="ref2-desc">Specifies the 2-piece (23kg each) checked baggage allowance for Economy class on flights between India (DEL) and Japan (HND), as well as lithium batteryWh restrictions ($\le$ 100Wh allowed in cabin).</p>
+                        <a href="https://www.jal.co.jp/jp/en/inter/baggage/" target="_blank" rel="noopener" class="text-xs text-jal-red hover:underline inline-flex items-center gap-1 font-semibold mt-1">
+                            <span>JAL International Baggage Policy</span> <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+
+                    <!-- Ref 3 -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                        <div class="flex justify-between items-start">
+                            <span class="font-bold text-slate-900" id="ref3-title">3. Delhi International Airport Limited (DIAL) Security & Baggage Protocol</span>
+                            <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-mono">DEL Terminal 3</span>
+                        </div>
+                        <p class="text-xs text-slate-600" id="ref3-desc">Detailed guidelines regarding passenger flow at T3, DigiYatra gate rules, and CISF prohibited items list.</p>
+                        <a href="https://www.newdelhiairport.in/security-baggage" target="_blank" rel="noopener" class="text-xs text-jal-red hover:underline inline-flex items-center gap-1 font-semibold mt-1">
+                            <span>Delhi Airport Official Baggage Guide</span> <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+
+                    <!-- Ref 4 -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                        <div class="flex justify-between items-start">
+                            <span class="font-bold text-slate-900" id="ref4-title">4. Ministry of Health, Labour and Welfare (MHLW), Japan</span>
+                            <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-mono">Medication Import Rules</span>
+                        </div>
+                        <p class="text-xs text-slate-600" id="ref4-desc">Governs quantity limits for students bringing prescription medicines, over-the-counter remedies, and medical devices into Japan.</p>
+                        <a href="https://www.mhlw.go.jp/english/policy/health-medical/pharmaceuticals/01.html" target="_blank" rel="noopener" class="text-xs text-jal-red hover:underline inline-flex items-center gap-1 font-semibold mt-1">
+                            <span>MHLW Japan Medicine Import Guidelines</span> <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p id="footer-text">Student Flight Assistant for DEL &rarr; HND (JL0030) | Designed for Japanese Exchange Students & Researchers</p>
+            <p class="text-slate-500">Always re-confirm specific regulations with Japan Airlines and Delhi Airport prior to travel. Content updated to current BCAS guidelines.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Current Active Language ('en' or 'ja')
+        let currentLang = 'en';
+
+        // Master Data for Interactive Item Checker
+        const itemsData = [
+            {
+                id: 'powerbank',
+                category: 'electronics',
+                status: 'allowed_cabin_only',
+                nameEn: 'Power Bank / Lithium Spare Batteries',
+                nameJa: 'モバイルバッテリー / リチウム予備電池',
+                ruleEn: 'Allowed in Cabin Baggage ONLY (Capacity $\\le$ 100Wh or 20,000mAh). Maximum 2 units per passenger.',
+                ruleJa: '手荷物（機内持ち込み）のみ可能（容量100Wh/20,000mAh以下）。1人最大2個まで。',
+                warningEn: 'STRICTLY FORBIDDEN in Checked Baggage! Will be confiscated by airport baggage screeners if placed in checked luggage.',
+                warningJa: '受託手荷物（預け入れ）に入れることは絶対禁止！発見された場合は没収されます。'
+            },
+            {
+                id: 'pickle',
+                category: 'food',
+                status: 'checked_only',
+                nameEn: 'Indian Pickles (Achar) & Spiced Oils',
+                nameJa: 'インドのピクルス（アチャール）・スパイスオイル',
+                ruleEn: 'Must be packed in CHECKED BAGGAGE with robust leak-proof seal.',
+                ruleJa: '必ず受託手荷物（預け荷物）に入れて厳重に漏れ防止をしてください。',
+                warningEn: 'FORBIDDEN in Cabin Baggage if container exceeds 100ml. Classified as liquid/gel under CISF rules.',
+                warningJa: '100mlを超える容器は機内持ち込み不可。CISFの規定で液体・ジェル類に分類されます。'
+            },
+            {
+                id: 'liquid_med',
+                category: 'meds',
+                status: 'conditional_allowed',
+                nameEn: 'Liquid Prescribed Medication (>100ml)',
+                nameJa: '100mlを超える液体処方薬',
+                ruleEn: 'EXEMPT from 100ml limit for cabin luggage IF accompanied by a English doctor’s prescription matching student passport name.',
+                ruleJa: 'パスポート名と一致する英文の医師診断書・処方箋がある場合に限り、100ml超でも機内持ち込み可能（特例）。',
+                warningEn: 'Must declare to CISF officers verbally before X-ray screening.',
+                warningJa: 'X線検査前に必ず保安検査員に口頭で申告してください。'
+            },
+            {
+                id: 'insulin_syringes',
+                category: 'meds',
+                status: 'conditional_allowed',
+                nameEn: 'Insulin Pen, Syringes & Hypodermic Needles',
+                nameJa: 'インスリン注射ペン・注射針',
+                ruleEn: 'Allowed in Cabin baggage ONLY with medical justification document and insulin liquid present.',
+                ruleJa: 'インスリン本体および英文処方箋を一緒に所持している場合のみ、機内持ち込み可能。',
+                warningEn: 'DO NOT pack insulin in checked luggage! Freezing temperatures in cargo hold will ruin medication.',
+                warningJa: '預け荷物には絶対に入れないでください！貨物室の低温でインスリン蛋白が変性・凍結します。'
+            },
+            {
+                id: 'lighters',
+                category: 'prohibited',
+                status: 'banned_everywhere',
+                nameEn: 'Lighters, Matchboxes & E-Cigarettes',
+                nameJa: 'ライター・マッチ・電子タバコ (Vape)',
+                ruleEn: 'STRICTLY PROHIBITED in both Hand Baggage and Checked Baggage across all Indian airports under BCAS rules.',
+                ruleJa: 'インド全空港（BCAS規定）により、手荷物・預け荷物の双方で完全に禁止されています。',
+                warningEn: 'Will be confiscated immediately at CISF security gates.',
+                warningJa: '保安検査場で例外なく即時没収されます。'
+            },
+            {
+                id: 'scissors',
+                category: 'prohibited',
+                status: 'checked_only',
+                nameEn: 'Scissors, Tweezers & Swiss Army Knives',
+                nameJa: 'ハサミ・ピンセット・十徳ナイフ（爪切り類）',
+                ruleEn: 'Allowed in CHECKED BAGGAGE only.',
+                ruleJa: '受託手荷物（預け荷物）のみ可能。',
+                warningEn: 'Blades >6cm or pointed metallic items in hand baggage will be confiscated instantly.',
+                warningJa: '刃渡り6cm超の刃物や尖った金属類を機内に持ち込むと即時没収となります。'
+            },
+            {
+                id: 'spices_powder',
+                category: 'food',
+                status: 'conditional_allowed',
+                nameEn: 'Indian Spices & Powders (>350g)',
+                nameJa: 'インドのスパイス・パウダー類（350g超）',
+                ruleEn: 'Recommended to put in CHECKED BAGGAGE. If in cabin baggage, subject to secondary X-ray & manual inspection.',
+                ruleJa: '受託手荷物に入れることを推奨。機内持ち込みの場合は二次X線検査および開封検査の対象となります。',
+                warningEn: 'Loose or unsealed bags may cause security delays.',
+                warningJa: '未開封でないものは検査に時間がかかる場合があります。'
+            },
+            {
+                id: 'laptop',
+                category: 'electronics',
+                status: 'allowed_cabin',
+                nameEn: 'Laptops, Tablets & Cameras',
+                nameJa: 'ノートパソコン・タブレット・カメラ',
+                ruleEn: 'Allowed in Cabin Baggage. Must be removed and placed in a separate screening tray at DEL T3.',
+                ruleJa: '機内持ち込み可能。DEL T3保安検査場ではバッグから取り出し、単独のトレイに乗せて検査を受ける必要があります。',
+                warningEn: 'Ensure fully charged in case security requests turning it on.',
+                warningJa: '検査員から起動確認を求められる場合に備え、充電しておいてください。'
+            },
+            {
+                id: 'duty_free',
+                category: 'lags',
+                status: 'conditional_allowed',
+                nameEn: 'Duty-Free Liquids (STEB Sealed)',
+                nameJa: '免税店購入の液体類 (STEB袋封印)',
+                ruleEn: 'Allowed through transit if inside a sealed Security Tamper-Evident Bag (STEB) with purchase receipt visible.',
+                ruleJa: '購入時の領収書が外から見える、未開封の不正開封防止袋（STEB）に封入されている場合のみ持込可能。',
+                warningEn: 'Do NOT open the bag before clearing final Japanese customs.',
+                warningJa: '日本到着後の税関検査終了まで袋を開封しないでください。'
+            }
+        ];
+
+        // Language Dictionary for Interface Elements
+        const i18n = {
+            en: {
+                appSubtitle: 'Delhi Airport (DEL) Baggage & Security Screening Assistant',
+                langBtnLabel: '日本語に切り替え',
+                flightTag: 'Japan Airlines JL0030 (Delhi T3 → Tokyo Haneda T3)',
+                bannerTitle: 'Student Flight Baggage Companion',
+                bannerDesc: 'Essential pre-flight baggage guidelines, CISF Delhi security rules, liquid exemptions, and JAL Economy Class allowance to ensure zero confiscations at Terminal 3.',
+                jalEconHeader: 'JAL Economy Class Allowance',
+                bagWt1: 'Max 23kg / 50lbs each',
+                bagWt2: 'Max 10kg + 1 Personal',
+                tabJL30: 'JL0030 Baggage Rules',
+                tabChecker: 'Interactive Item Checker',
+                tabMeds: 'Medicines & Exemptions',
+                tabDelhi: 'DEL T3 Screening Checklist',
+                tabRef: 'Appendices & References',
+                jl30Sec1Title: 'JAL JL0030 Economy Class Checked Baggage Limits',
+                statusIncluded: 'Standard Free Allowance',
+                numBagsTitle: 'Quantity Allowance',
+                piecesUnit: 'Pieces (Piece Concept)',
+                numBagsDesc: 'Applicable to standard Economy / Premium Economy tickets for Japan Airlines flights from India to Tokyo.',
+                weightLimitTitle: 'Weight Limit Per Bag',
+                weightLimitDesc: 'Strictly enforced at DEL T3 check-in counters. Bags over 23kg will incur heavy overweight fees.',
+                dimTitle: 'Maximum Dimensions Allowance',
+                dimDesc: 'The total linear dimensions (Length + Width + Height) of each piece must not exceed 203 cm (80 inches), including handles, pockets, and wheels.',
+                carryTitle: 'JL0030 Carry-On (Hand Baggage) Specifics',
+                carryMainLbl: '1 Main Carry-On Bag',
+                carryMainDesc: 'Max 55cm × 40cm × 25cm (Total linear dimensions ≤ 115cm)',
+                carryPersonalLbl: '1 Personal Item',
+                carryPersonalDesc: 'Laptop bag, handbag, or small backpack to fit under seat.',
+                carryCombNote: '* Note: Combined total weight of both main carry-on and personal item must NOT exceed 10 kg (22 lbs).',
+                calcTitle: 'JL0030 Luggage Weight Estimator',
+                calcSubtitle: 'Check if your packed luggage meets JAL Economy Class limits.',
+                calcBag1Lbl: 'Checked Bag 1 Weight (kg):',
+                calcBag2Lbl: 'Checked Bag 2 Weight (kg):',
+                calcCabinLbl: 'Cabin Bag + Personal Item Weight (kg):',
+                calcFeeNote: 'Overweight fee (23kg - 32kg): Approx JPY 10,000 / USD 70 per bag. Over 32kg is not accepted as baggage.',
+                checkerHeader: 'Interactive Baggage Item Search',
+                checkerSub: 'Search for any item to verify whether it goes into Cabin Baggage, Checked Baggage, or is Completely Banned at Delhi Airport.',
+                catOptAll: 'All Categories',
+                catOptLags: 'Liquids, Aerosols & Gels',
+                catOptElec: 'Electronics & Batteries',
+                catOptMeds: 'Medicines & Health',
+                catOptFood: 'Spices, Food & Pickles',
+                catOptPro: 'Prohibited & Sharp Items',
+                legAllowed: 'Allowed in Cabin',
+                legCond: 'Conditional / 100ml Rule',
+                legChecked: 'Checked Baggage Only',
+                legBanned: 'Strictly Forbidden Everywhere',
+                medsTitle: 'Comprehensive Medical Guidance & Screening Exemptions',
+                medsSub: 'Rules for carrying prescription drugs, liquid medications >100ml, and medical devices through CISF security at Delhi T3.',
+                medSolidTitle: 'Pills & Tablets (Solid Form)',
+                medSolidDesc: 'Allowed in both cabin and checked baggage without strict quantity limits for personal use during travel.',
+                medSolidTipTitle: 'Best Practice:',
+                medSolidTip: 'Keep in original foil/bottle with student name visible. Carry doctor’s prescription in English.',
+                medLiquidTitle: 'Liquid Medicines (>100ml)',
+                medLiquidDesc: 'EXEMPT from the 100ml LAGs limit if needed during flight/transit.',
+                medLiquidReqTitle: 'Mandatory Requirements:',
+                medSyringesTitle: 'Insulin, Syringes & Needles',
+                medSyringesDesc: 'Hypodermic needles/syringes are allowed in cabin baggage ONLY when accompanied by injectable medication (e.g., Insulin).',
+                medSyringesWarnTitle: 'Critical Storage Warning:',
+                medSyringesWarn: 'NEVER pack insulin in checked baggage! Temperatures in aircraft cargo can freeze and destroy insulin protein.',
+                prescBoxTitle: 'Checklist for Flying with Prescription Medication to Japan',
+                prescDelhiCheck: 'For Delhi Airport (CISF Security Outbound):',
+                prescJapanCheck: 'For Japan Entry (Customs & MHLW Rules):',
+                secTitle: 'Delhi Airport (DEL T3) Security Screening Protocol (CISF Rules)',
+                secSub: 'Step-by-step security tray preparation to avoid secondary manual searches or confiscations at Terminal 3.',
+                chkHead: 'Security Tray Preparation Steps (CISF Officer Expectations):',
+                cisfWarnT: 'CISF Zero-Tolerance Confiscation Notice',
+                cisfWarnD: 'Lighters, matchboxes, e-cigarettes/vapes, sharp manicure tools, and liquid containers exceeding 100ml (including traditional Indian pickles in oil) are immediately confiscated without exception at DEL T3 security screening. Confiscated items cannot be retrieved or mailed back.',
+                refHeader: 'Appendices & Official Legal References',
+                refSub: 'Regulatory sources governing Indian aviation security, Japan Airlines policy, and Japanese Ministry regulations.',
+                footerText: 'Student Flight Assistant for DEL → HND (JL0030) | Designed for Japanese Exchange Students & Researchers'
+            },
+            ja: {
+                appSubtitle: 'デリー空港 (DEL) 手荷物・保安検査対策アシスタント',
+                langBtnLabel: 'Switch to English',
+                flightTag: '日本航空 JL0030便（デリーT3発 → 東京羽田T3着）',
+                bannerTitle: '帰国留学生向け 手荷物ルール完全ガイド',
+                bannerDesc: 'ターミナル3での没収ゼロを目指す、デリー空港(CISF)の保安検査規則、液体物特例、JL0030便エコノミークラスの受託手荷物制限まとめ。',
+                jalEconHeader: 'JAL エコノミークラス許容量',
+                bagWt1: '1個あたり最大 23kg',
+                bagWt2: '10kg以内 + 個人 belongings',
+                tabJL30: 'JL0030便 荷物規定',
+                tabChecker: '持ち込み可否チェッカー',
+                tabMeds: '医薬品の特例持ち込み',
+                tabDelhi: 'DEL T3保安検査手順',
+                tabRef: '法令・公式参照資料',
+                jl30Sec1Title: 'JAL JL0030便 エコノミークラス無料受託手荷物制限',
+                statusIncluded: '無料許容量（個数制）',
+                numBagsTitle: '受託可能個数',
+                piecesUnit: '個（個数制 Piece Concept）',
+                numBagsDesc: 'インド発東京行きのJALエコノミークラスおよびプレミアムエコノミークラスに適用されます。',
+                weightLimitTitle: '1個あたりの重量制限',
+                weightLimitDesc: 'デリーT3カウンターで厳格に計測されます。23kg超過は高額な過重料金が発生します。',
+                dimTitle: '最大サイズ制限（3辺の合計）',
+                dimDesc: '各キャリーケースの3辺の和（縦＋横＋高さ）は、キャスターや取っ手を含めて 203 cm (80インチ) 以内である必要があります。',
+                carryTitle: 'JL0030便 機内持ち込み手荷物詳細',
+                carryMainLbl: '主手荷物 1個',
+                carryMainDesc: '最大 55cm × 40cm × 25cm 以内（3辺の合計 115cm 以内）',
+                carryPersonalLbl: '身の回り品 1個',
+                carryPersonalDesc: '座席下に収納できるパソコンバッグ、ハンドバッグ、小型リュックサックなど。',
+                carryCombNote: '※ 注意: 主手荷物と身の回り品の「合計重量」は 10 kg (22 lbs) を超えてはなりません。',
+                calcTitle: 'JL0030 手荷物重量計算シミュレーター',
+                calcSubtitle: 'パッキングした荷物がJAL規定内に収まっているか確認できます。',
+                calcBag1Lbl: '受託手荷物 1個目 (kg):',
+                calcBag2Lbl: '受託手荷物 2個目 (kg):',
+                calcCabinLbl: '機内持ち込み ＋ 身の回り品合計 (kg):',
+                calcFeeNote: '超過重量手数料 (23kg〜32kg): 1個につき約 10,000円 / 70米ドル。32kg超の荷物は受託不可。',
+                checkerHeader: 'インタラクティブ品目検索',
+                checkerSub: 'デリー空港で「機内持ち込み」「預け荷物」「完全禁止」のいずれに該当するか検索できます。',
+                catOptAll: 'すべてのカテゴリー',
+                catOptLags: '液体・エアゾール・ジェル類',
+                catOptElec: '電子機器・バッテリー',
+                catOptMeds: '医薬品・衛生用品',
+                catOptFood: '食品・スパイス・ピクルス',
+                catOptPro: '危険物・刃物類',
+                legAllowed: '機内持ち込み可能',
+                legCond: '条件付き / 100mlルール適用',
+                legChecked: '預け荷物（受託手荷物）限定',
+                legBanned: '一切持込禁止（没収対象）',
+                medsTitle: '医薬品の持ち込み・保安検査特例ガイド',
+                medsSub: '処方薬、100mlを超える液体薬、インスリン注射針をデリーT3のCISF検査場に持ち込む際の規定。',
+                medSolidTitle: '錠剤・粉薬（固形医薬品）',
+                medSolidDesc: '旅行中の個人使用目的であれば、機内持ち込み・預け荷物ともに特別な数量制限なく持ち込めます。',
+                medSolidTipTitle: '推奨事項:',
+                medSolidTip: '学生氏名が確認できる原形のシート/ボトルのまま持参し、英文処方箋を添えてください。',
+                medLiquidTitle: '100mlを超える液体医薬品',
+                medLiquidDesc: '飛行中・乗り継ぎ時に必要な場合、100mlの液体制限の「免除対象」となります。',
+                medLiquidReqTitle: '必須要件:',
+                medSyringesTitle: 'インスリン・注射針',
+                medSyringesDesc: '注射針・シリンジは、インスリン等の注射用液体薬とセットで所持している場合に限り機内持ち込みが許可されます。',
+                medSyringesWarnTitle: '重要保管警告:',
+                medSyringesWarn: 'インスリンを絶対に預け荷物（スーツケース）に入れないでください！上空の貨物室で凍結し成分が壊れます。',
+                prescBoxTitle: '日本へ処方薬を持ち帰る際のチェックリスト',
+                prescDelhiCheck: 'デリー空港保安検査 (CISF) 対策:',
+                prescJapanCheck: '日本帰国時（税関・厚生労働省）対策:',
+                secTitle: 'デリー空港 (DEL T3) 保安検査プロトコル (CISF規定)',
+                secSub: 'ターミナル3での二次検査や手荷物没収を防ぐためのトレイ準備手順。',
+                chkHead: '保安検査トレイ準備ステップ（CISF検査員の指示基準）:',
+                cisfWarnT: 'CISF 没収規定に関する厳重注意',
+                cisfWarnD: 'ライター、マッチ、電子タバコ(Vape)、鋭利な爪切り・ハサミ、100mlを超える容器（油漬けアチャール等を含む）は、DEL T3の保安検査場で即座に没収されます。没収品の返還や後送は一切できません。',
+                refHeader: '附録・公式根拠法令リスト',
+                refSub: 'インド民空局、日本航空、日本厚生労働省の公式規定一覧。',
+                footerText: '帰国留学生向け DEL → HND (JL0030) 手荷物アシスタント | 日本人学生・研究者用'
+            }
+        };
+
+        // Tab Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-jal-red', 'border-t-2', 'border-x', 'border-jal-red', 'font-semibold', 'shadow-sm');
+                btn.classList.add('text-slate-600', 'hover:text-slate-900', 'hover:bg-slate-100');
+            });
+
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.add('bg-white', 'text-jal-red', 'border-t-2', 'border-x', 'border-jal-red', 'font-semibold', 'shadow-sm');
+            activeBtn.classList.remove('text-slate-600', 'hover:text-slate-900', 'hover:bg-slate-100');
+        }
+
+        // Language Switcher Toggle
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ja' : 'en';
+            applyLanguage();
+            filterItems(); // Re-render item search results with current language
+            calculateBaggage(); // Re-render calculator messages
+        }
+
+        function applyLanguage() {
+            const langData = i18n[currentLang];
+            
+            // Text Elements Translation mapping
+            document.getElementById('lang-label').textContent = langData.langBtnLabel;
+            document.getElementById('app-subtitle').textContent = langData.appSubtitle;
+            document.getElementById('flight-tag').textContent = langData.flightTag;
+            document.getElementById('banner-title').textContent = langData.bannerTitle;
+            document.getElementById('banner-desc').textContent = langData.bannerDesc;
+            document.getElementById('jal-econ-header').textContent = langData.jalEconHeader;
+            document.getElementById('bag-wt-1').textContent = langData.bagWt1;
+            document.getElementById('bag-wt-2').textContent = langData.bagWt2;
+
+            // Tabs Labels
+            document.getElementById('tab-label-jl30').textContent = langData.tabJL30;
+            document.getElementById('tab-label-checker').textContent = langData.tabChecker;
+            document.getElementById('tab-label-meds').textContent = langData.tabMeds;
+            document.getElementById('tab-label-delhi').textContent = langData.tabDelhi;
+            document.getElementById('tab-label-ref').textContent = langData.tabRef;
+
+            // Tab 1
+            document.getElementById('jl30-sec1-title').innerHTML = `<i class="fa-solid fa-boxes-packing text-jal-red"></i> ${langData.jl30Sec1Title}`;
+            document.getElementById('status-included').textContent = langData.statusIncluded;
+            document.getElementById('num-bags-title').textContent = langData.numBagsTitle;
+            document.getElementById('pieces-unit').textContent = langData.piecesUnit;
+            document.getElementById('num-bags-desc').textContent = langData.numBagsDesc;
+            document.getElementById('weight-limit-title').textContent = langData.weightLimitTitle;
+            document.getElementById('weight-limit-desc').textContent = langData.weightLimitDesc;
+            document.getElementById('dim-title').innerHTML = `<i class="fa-solid fa-ruler-combined text-amber-600"></i> ${langData.dimTitle}`;
+            document.getElementById('dim-desc').innerHTML = langData.dimDesc;
+            document.getElementById('carry-title').innerHTML = `<i class="fa-solid fa-briefcase text-slate-600"></i> ${langData.carryTitle}`;
+            document.getElementById('carry-main-lbl').textContent = langData.carryMainLbl;
+            document.getElementById('carry-main-desc').textContent = langData.carryMainDesc;
+            document.getElementById('carry-personal-lbl').textContent = langData.carryPersonalLbl;
+            document.getElementById('carry-personal-desc').textContent = langData.carryPersonalDesc;
+            document.getElementById('carry-comb-note').textContent = langData.carryCombNote;
+
+            // Calculator
+            document.getElementById('calc-title').innerHTML = `<i class="fa-solid fa-calculator"></i> ${langData.calcTitle}`;
+            document.getElementById('calc-subtitle').textContent = langData.calcSubtitle;
+            document.getElementById('calc-bag1-lbl').textContent = langData.calcBag1Lbl;
+            document.getElementById('calc-bag2-lbl').textContent = langData.calcBag2Lbl;
+            document.getElementById('calc-cabin-lbl').textContent = langData.calcCabinLbl;
+            document.getElementById('calc-fee-note').textContent = langData.calcFeeNote;
+
+            // Tab 2
+            document.getElementById('checker-header').textContent = langData.checkerHeader;
+            document.getElementById('checker-sub').textContent = langData.checkerSub;
+            document.getElementById('cat-opt-all').textContent = langData.catOptAll;
+            document.getElementById('cat-opt-lags').textContent = langData.catOptLags;
+            document.getElementById('cat-opt-elec').textContent = langData.catOptElec;
+            document.getElementById('cat-opt-meds').textContent = langData.catOptMeds;
+            document.getElementById('cat-opt-food').textContent = langData.catOptFood;
+            document.getElementById('cat-opt-pro').textContent = langData.catOptPro;
+            document.getElementById('leg-allowed').textContent = langData.legAllowed;
+            document.getElementById('leg-cond').textContent = langData.legCond;
+            document.getElementById('leg-checked').textContent = langData.legChecked;
+            document.getElementById('leg-banned').textContent = langData.legBanned;
+
+            // Tab 3
+            document.getElementById('meds-title').innerHTML = `<i class="fa-solid fa-hand-holding-medical text-jal-red"></i> ${langData.medsTitle}`;
+            document.getElementById('meds-sub').textContent = langData.medsSub;
+            document.getElementById('med-solid-title').textContent = langData.medSolidTitle;
+            document.getElementById('med-solid-desc').textContent = langData.medSolidDesc;
+            document.getElementById('med-solid-tip-title').textContent = langData.medSolidTipTitle;
+            document.getElementById('med-solid-tip').textContent = langData.medSolidTip;
+            document.getElementById('med-liquid-title').textContent = langData.medLiquidTitle;
+            document.getElementById('med-liquid-desc').innerHTML = langData.medLiquidDesc;
+            document.getElementById('med-liquid-req-title').textContent = langData.medLiquidReqTitle;
+            document.getElementById('med-syringes-title').textContent = langData.medSyringesTitle;
+            document.getElementById('med-syringes-desc').innerHTML = langData.medSyringesDesc;
+            document.getElementById('med-syringes-warn-title').textContent = langData.medSyringesWarnTitle;
+            document.getElementById('med-syringes-warn').textContent = langData.medSyringesWarn;
+            document.getElementById('presc-box-title').innerHTML = `<i class="fa-solid fa-file-medical"></i> ${langData.prescBoxTitle}`;
+            document.getElementById('presc-delhi-check').textContent = langData.prescDelhiCheck;
+            document.getElementById('presc-japan-check').textContent = langData.prescJapanCheck;
+
+            // Tab 4
+            document.getElementById('sec-title').innerHTML = `<i class="fa-solid fa-shield-cat text-cisf-accent"></i> ${langData.secTitle}`;
+            document.getElementById('sec-sub').textContent = langData.secSub;
+            document.getElementById('chk-head').textContent = langData.chkHead;
+            document.getElementById('cisf-warn-t').innerHTML = `<i class="fa-solid fa-triangle-exclamation text-rose-600"></i> ${langData.cisfWarnT}`;
+            document.getElementById('cisf-warn-d').innerHTML = langData.cisfWarnD;
+
+            // Tab 5
+            document.getElementById('ref-header').textContent = langData.refHeader;
+            document.getElementById('ref-sub').textContent = langData.refSub;
+            document.getElementById('footer-text').textContent = langData.footerText;
+        }
+
+        // Luggage Weight Calculation Logic
+        function calculateBaggage() {
+            const b1 = parseFloat(document.getElementById('calc-bag1').value) || 0;
+            const b2 = parseFloat(document.getElementById('calc-bag2').value) || 0;
+            const cabin = parseFloat(document.getElementById('calc-cabin').value) || 0;
+
+            const resDiv = document.getElementById('calc-result');
+            let messages = [];
+            let isValid = true;
+
+            if (b1 > 23) {
+                isValid = false;
+                messages.push(currentLang === 'en' ? `Bag 1 (${b1}kg) exceeds 23kg limit!` : `受託1個目 (${b1}kg) が23kg制限を超過！`);
+            }
+            if (b2 > 23) {
+                isValid = false;
+                messages.push(currentLang === 'en' ? `Bag 2 (${b2}kg) exceeds 23kg limit!` : `受託2個目 (${b2}kg) が23kg制限を超過！`);
+            }
+            if (cabin > 10) {
+                isValid = false;
+                messages.push(currentLang === 'en' ? `Cabin total (${cabin}kg) exceeds 10kg limit!` : `機内持ち込み (${cabin}kg) が10kg上限をオーバー！`);
+            }
+
+            if (isValid) {
+                resDiv.className = 'p-4 rounded-xl bg-emerald-900/40 border border-emerald-600/50 space-y-1 text-emerald-200';
+                resDiv.innerHTML = `
+                    <div class="flex items-center gap-2 font-bold text-emerald-400">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>${currentLang === 'en' ? 'Within Allowed JAL Limits' : 'JAL規定内（正常）'}</span>
+                    </div>
+                    <p class="text-xs text-emerald-300">
+                        ${currentLang === 'en' ? 'Your baggage weights meet Economy Class allowance for flight JL0030.' : 'ご提示の重量はJL0030便エコノミークラスの無料許容量範囲内です。'}
+                    </p>
+                `;
+            } else {
+                resDiv.className = 'p-4 rounded-xl bg-rose-900/40 border border-rose-600/50 space-y-1 text-rose-200';
+                resDiv.innerHTML = `
+                    <div class="flex items-center gap-2 font-bold text-rose-400">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>${currentLang === 'en' ? 'Weight Limit Violation' : '規定重量オーバー'}</span>
+                    </div>
+                    <ul class="text-xs list-disc pl-4 text-rose-300">
+                        ${messages.map(m => `<li>${m}</li>`).join('')}
+                    </ul>
+                `;
+            }
+        }
+
+        // Dynamic Filtering for Baggage Items Grid
+        function filterItems() {
+            const query = document.getElementById('item-search').value.toLowerCase();
+            const cat = document.getElementById('category-filter').value;
+            const container = document.getElementById('items-grid');
+
+            const filtered = itemsData.filter(item => {
+                const matchesCat = (cat === 'all' || item.category === cat);
+                const name = (currentLang === 'en' ? item.nameEn : item.nameJa).toLowerCase();
+                const matchesQuery = name.includes(query) || item.nameEn.toLowerCase().includes(query) || item.nameJa.includes(query);
+                return matchesCat && matchesQuery;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full p-8 text-center text-slate-400 space-y-2">
+                        <i class="fa-solid fa-box-open text-4xl"></i>
+                        <p class="text-sm font-medium">${currentLang === 'en' ? 'No matching items found.' : '該当する品目が表示されません。'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => {
+                let badgeClass = '';
+                let badgeText = '';
+                let iconClass = '';
+
+                switch (item.status) {
+                    case 'allowed_cabin_only':
+                        badgeClass = 'bg-amber-100 text-amber-800 border-amber-300';
+                        badgeText = currentLang === 'en' ? 'Cabin Only (No Checked)' : '手荷物のみ（預け入れ不可）';
+                        iconClass = 'fa-solid fa-plane-arrival text-amber-600';
+                        break;
+                    case 'checked_only':
+                        badgeClass = 'bg-blue-100 text-blue-800 border-blue-300';
+                        badgeText = currentLang === 'en' ? 'Checked Luggage Only' : '受託手荷物のみ可能';
+                        iconClass = 'fa-solid fa-suitcase text-blue-600';
+                        break;
+                    case 'conditional_allowed':
+                        badgeClass = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+                        badgeText = currentLang === 'en' ? 'Conditional / Exempt' : '条件付き許可（特例あり）';
+                        iconClass = 'fa-solid fa-circle-check text-emerald-600';
+                        break;
+                    case 'allowed_cabin':
+                        badgeClass = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+                        badgeText = currentLang === 'en' ? 'Allowed in Cabin' : '機内持ち込み可能';
+                        iconClass = 'fa-solid fa-laptop text-emerald-600';
+                        break;
+                    case 'banned_everywhere':
+                        badgeClass = 'bg-rose-100 text-rose-800 border-rose-300';
+                        badgeText = currentLang === 'en' ? 'Strictly Banned (Confiscated)' : '全持ち込み禁止（没収対象）';
+                        iconClass = 'fa-solid fa-ban text-rose-600';
+                        break;
+                }
+
+                const name = currentLang === 'en' ? item.nameEn : item.nameJa;
+                const rule = currentLang === 'en' ? item.ruleEn : item.ruleJa;
+                const warning = currentLang === 'en' ? item.warningEn : item.warningJa;
+
+                return `
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-md transition-all space-y-3 flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <div class="flex items-start justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <i class="${iconClass} text-lg"></i>
+                                    <h4 class="font-bold text-slate-900 text-sm">${name}</h4>
+                                </div>
+                            </div>
+                            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold border ${badgeClass}">
+                                ${badgeText}
+                            </span>
+                            <p class="text-xs text-slate-700 leading-relaxed">${rule}</p>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-rose-50 border border-rose-200 text-[11px] text-rose-900 font-medium">
+                            <i class="fa-solid fa-circle-exclamation text-rose-600 mr-1"></i>
+                            ${warning}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize Page
+        window.onload = function() {
+            filterItems();
+            calculateBaggage();
+        };
+    </script>
+</body>
+</html>
+
